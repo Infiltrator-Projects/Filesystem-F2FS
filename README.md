@@ -27,6 +27,7 @@ Independent mkfs.f2fs images, conflicting checkpoints, invalid NAT/SIT entries a
 ## 7. Technical references and provenance
 
 - [Pinned central source baseline](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs)
+- [Native design](native/filesystems/f2fs/DESIGN.md)
 - [Migration and qualification plan](MIGRATION_STATUS.md)
 - [Project philosophy](docs/PHILOSOPHY.md)
 - [Common ABI](https://github.com/Infiltrator-Projects/Libraries)
