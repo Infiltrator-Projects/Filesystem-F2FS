@@ -376,7 +376,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 37 0 R >>
 endobj
 37 0 obj
-<< /Length 2568 >>
+<< /Length 2543 >>
 stream
 0.06 0.15 0.23 rg 0 768 595 74 re f
 1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
@@ -386,21 +386,21 @@ BT /F2 22 Tf 43 784 Td (F2FS - technical reference) Tj ET
 0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (include/linux/f2fs_fs.h:) Tj ET
 0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (https://github.com/torvalds/linux/blob/v6.12/include/linux/f2fs_fs.h . Design) Tj ET
 0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (documentation: https://docs.kernel.org/6.6/filesystems/f2fs.html . Reference) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (algorithms: fs/f2fs/node.c, segment.c, checkpoint.c, recovery.c, dir.c and hash.c) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (in the same kernel tree. Independent tools:) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/ . Test both) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (checkpoint copies, shadow bits and journal overrides, root and node identity,) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (direct/indirect transitions, long names, sparse and compressed files, invalid) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (summary ownership, orphan processing, interrupted GC and checkpoint publication.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 566 Td (Use independent mkfs/fsck/dump images as oracles, not production fallbacks. Exact) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 552 Td (checksum coverage, large NAT bitmap layouts, compact summaries, hash implementation) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 538 Td (and feature-dependent recovery still require dedicated specification and fixture) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 524 Td (verification before claiming full independent write compatibility.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 500 Td (Cross-check the retained super.c and the checkpoint, segment and node code with the) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 486 Td (native on-disk definitions.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (algorithms: fs/f2fs/super.c, node.c, segment.c, checkpoint.c, recovery.c, dir.c) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (and hash.c in the same kernel tree. Independent tools:) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/ . Test) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (both checkpoint copies, shadow bits and journal overrides, root and node) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (identity, direct/indirect transitions, long names, sparse and compressed files,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (invalid summary ownership, orphan processing, interrupted GC and checkpoint) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 566 Td (publication. Use independent mkfs/fsck/dump images as oracles, not production) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 552 Td (fallbacks. Exact checksum coverage, large NAT bitmap layouts, compact) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 538 Td (summaries, hash implementation and feature-dependent recovery still require) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 524 Td (dedicated specification and fixture verification before claiming full) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 510 Td (independent write compatibility.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 486 Td (Cross-check these implementation sources with the native on-disk definitions.) Tj ET
 0.08 0.14 0.20 rg BT /F3 10 Tf 43 462 Td (Retained source:) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 448 Td (https://github.com/Infiltrator-Projects/Filesystems/blob/101026021d9088d80b7f0f472d) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 434 Td (9061f0e2c688a3/native/filesystems/f2fs/linux/f2fs.h \(blob e1cbd3917b\).) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 448 Td (https://github.com/Infiltrator-Projects/Filesystems/blob/101026021d9088d80b7f0f) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 434 Td (472d9061f0e2c688a3/native/filesystems/f2fs/linux/f2fs.h \(blob e1cbd3917b\).) Tj ET
 0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 16) Tj ET
 endstream
 endobj
@@ -447,5 +447,5 @@ xref
 trailer
 << /Size 38 /Root 1 0 R >>
 startxref
-31070
+31045
 %%EOF
