@@ -1,16 +1,5 @@
 # Filesystem-F2FS
 
-Independent Common V2 native recognition development. Native superblock geometry, mirrored metadata identity and complete checksummed checkpoint-pack anchors; no NAT/SIT replay or mount.
+Native Common V2 offline reader development. Recognition verifies redundant superblock geometry and complete checkpoint-pack CRCs. The new reader selects the newest complete clean checkpoint, uses native NAT/SIT shadow bitmaps and checkpoint journals, reconstructs live allocation counts, validates node identity and provides bounded stat/list/read through ordinary and inline directories and direct data mappings. Initial mount scope excludes feature extensions, multi-device/zoned layouts, checkpoint payloads, dirty recovery, external xattrs and higher indirection. The published PDF-only release remains unchanged pending exact-source namespace and independently populated-media qualification. No write, format, repair, defragmentation or physical BOOT/kernel qualification is claimed.
 
-The implementation exports only CORE PROBE; it neither mounts nor modifies media. Hosted and import-free builds, malformed metadata fixtures, independent formatter images and sanitizer tests are defined in CI. Exact-revision test results establish qualification, not the presence of this source. The published v0.0.1 package remains documentation-only; no runtime installer is published at this stage.
-
-## Technical references
-
-- [Integrated format manual](docs/F2FS.pdf)
-- [Technical reference source](docs/F2FS-TECHNICAL-REFERENCE.md)
-- [Design](native/filesystems/f2fs/DESIGN.md)
-- [Migration status](MIGRATION_STATUS.md)
-- [Pinned central source](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs)
-- [Common V2](https://github.com/Infiltrator-Projects/Libraries)
-
-Original implementation GPL-3.0-or-later; inherited sources retain their notices.
+[Manual](docs/F2FS.pdf) · [Technical reference](docs/F2FS-TECHNICAL-REFERENCE.md) · [Migration status](MIGRATION_STATUS.md) · [Common V2](https://github.com/Infiltrator-Projects/Libraries)

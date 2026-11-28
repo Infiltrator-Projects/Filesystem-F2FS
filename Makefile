@@ -3,12 +3,13 @@ CC ?= cc
 CFLAGS ?= -O2
 BASE = -std=c11 -Wall -Wextra -Werror -I Libraries/include
 SRC = native/filesystems/f2fs/f2fs.c
+HDR = native/filesystems/f2fs/reader.h
 .PHONY: all check clean
 all: build/F2FS.so build/freestanding/F2FS.so
-build/F2FS.so: $(SRC) Makefile
+build/F2FS.so: $(SRC) $(HDR) Makefile
 	mkdir -p build
 	$(CC) $(BASE) $(CFLAGS) -fPIC -fvisibility=hidden -shared -Wl,-z,defs -o $@ $(SRC)
-build/freestanding/F2FS.so: $(SRC) Makefile
+build/freestanding/F2FS.so: $(SRC) $(HDR) Makefile
 	mkdir -p build/freestanding
 	$(CC) $(BASE) -O2 -march=x86-64 -DIFS_FREESTANDING -ffreestanding -fno-builtin -fno-stack-protector -fno-tree-loop-distribute-patterns -fPIC -fvisibility=hidden -shared -nostdlib -Wl,-z,defs,-Bsymbolic -o $@ $(SRC)
 build/test_f2fs: tests/test_f2fs.c
