@@ -1,38 +1,16 @@
 # Filesystem-F2FS
 
-## 1. Purpose and format scope
+Independent Common V2 native recognition development. Native superblock geometry, mirrored metadata identity and complete checksummed checkpoint-pack anchors; no NAT/SIT replay or mount.
 
-Flash-Friendly File System (F2FS). This repository is the designated independent implementation home for InfiltratorOS. **Documentation and migration scaffold only: no independent runtime provider or release is present.**
+The implementation exports only CORE PROBE; it neither mounts nor modifies media. Hosted and import-free builds, malformed metadata fixtures, independent formatter images and sanitizer tests are defined in CI. Exact-revision test results establish qualification, not the presence of this source. The published v0.0.1 package remains documentation-only; no runtime installer is published at this stage.
 
-## 2. On-disk architecture and invariants
+## Technical references
 
-Checkpoint packs select a consistent state; NAT and SIT tables map nodes and track segment allocation. Resolve node addresses and inline data according to feature flags and checkpoint consistency. Allocation is segment-oriented, not FAT-chain based. These are design requirements for the native implementation, not claims about code already present in this repository.
+- [Integrated format manual](docs/F2FS.pdf)
+- [Technical reference source](docs/F2FS-TECHNICAL-REFERENCE.md)
+- [Design](native/filesystems/f2fs/DESIGN.md)
+- [Migration status](MIGRATION_STATUS.md)
+- [Pinned central source](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs)
+- [Common V2](https://github.com/Infiltrator-Projects/Libraries)
 
-## 3. Common V2 implementation and capabilities
-
-No local Common V2 implementation or advertised operation set has yet been qualified. The target entry point is `infiltrator_filesystem_api_v2`, using bounded, partition-relative host I/O. Implement native probe first, then mount, stat, enumeration, read and volume query where applicable. Consumers must negotiate supported groups and profiles; an unsupported operation must not report success or delegate to a private driver.
-
-## 4. Integrity, mutation, allocation and recovery
-
-Mutation, formatting, check/repair and DEFRAG map/plan/execute/verify/recover require format-specific allocation and ordering invariants, exclusive writable host access and demonstrated interruption recovery. Until qualified, reject them before writing. Preserve native disk semantics and do not add a kernel or FUSE fallback as an alternative filesystem authority.
-
-## 5. Build, installation and release
-
-The target installation is `/System/Filesystems/F2FS.so` and `/System/Resources/Documentation/Filesystem-F2FS.pdf`. Neither file is currently distributed by this repository. Once the implementation qualifies, the intended release is a portable amd64 DEB and CPU-native source-first RUN, with GitHub's automatic source archive. No install or build command is advertised before an executable build exists.
-
-## 6. Qualification and limitations
-
-Independent mkfs.f2fs images, conflicting checkpoints, invalid NAT/SIT entries and unsupported feature flags. Compare independent payloads and unchanged-image hashes; inject truncation, corruption and I/O faults. Establish exact-revision ABI, hosted and import-free freestanding qualification, then independently test BOOT and kernel integration. No local build, runtime or packaging qualification is claimed.
-
-## 7. Technical references and provenance
-
-- [Technical reference (PDF)](docs/F2FS.pdf) — original-format technical reference as one integrated manual and [PDF stream source](docs/F2FS.pdfstreams); not an operational manual.
-
-- [Pinned central source baseline](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs)
-- [Native design](native/filesystems/f2fs/DESIGN.md)
-- [Migration and qualification plan](MIGRATION_STATUS.md)
-- [Original-format reference source](docs/F2FS.pdfstreams) and [PDF](docs/F2FS.pdf)
-- [Project philosophy](docs/PHILOSOPHY.md)
-- [Common ABI](https://github.com/Infiltrator-Projects/Libraries)
-
-Preserve inherited notices and licences on source extraction; new project-authored code uses GPL-3.0-or-later. The [technical reference](docs/F2FS-TECHNICAL-REFERENCE.md) expands the original-format research. The PDF preserves both earlier documents as historical appendices; installation remains pending. Central code or test results are not evidence of an independent provider.
+Original implementation GPL-3.0-or-later; inherited sources retain their notices.
