@@ -1,11 +1,7 @@
 # F2FS Common V2 migration
 
-Native superblock geometry, mirrored metadata identity and complete checksummed checkpoint-pack anchors; no NAT/SIT replay or mount.
+Native offline namespace implementation for clean conventional 4 KiB single-device media. Native checkpoint-pack CRC validation and sequence selection, SIT and NAT shadow-table bitmaps and journal overlay, live-block counts and node identity validation provide CORE probe/mount/stat/list/read and VOLUME query. Ordinary and inline directories and files, direct inode addresses and first two direct-node mappings are admitted. Exclusive read-only host ownership is required. Unsupported geometry and inode features are refused.
 
-CORE PROBE is implemented. No mounted operations, allocation map, native formatting, mutation, defragmentation, journal recovery, physical BOOT or kernel qualification are claimed. CI tests the actual shared object with bounded sector I/O and independent disposable formatter images; the formatter is never a runtime backend. Further namespace work and independent payload comparison are required before publishing a runtime package. The previous documentation release remains valid.
+[Independent empty image qualification](https://github.com/Infiltrator-Projects/Filesystem-F2FS/actions/runs/46131627341) and [independently populated payload qualification](https://github.com/Infiltrator-Projects/Filesystem-F2FS/actions/runs/46131738008) passed. The latter uses the upstream formatter and sload.f2fs as test oracles only, compares actual file bytes and verifies unchanged image hashes; hosted/import-free and sanitizer tests passed. The release workflow rechecks exact-source CI and the reconstructed package.
 
-The [original pinned source](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs) remains central reference material; its original notices and licences remain intact.
-
-## Offline reader development
-
-CORE mount/stat/list/read and VOLUME query implemented for the bounded clean conventional profile. NAT/SIT shadow and journal overlay, native live-bit counts, node footer identity, and inline/ordinary file reads are required. The new exact-revision CI is a gate, not a claim of success. Independent populated payload validation and broader profiles remain outstanding.
+Remaining: higher indirection, complete reverse ownership and directory hash validation, extended inode layouts, larger checkpoint bitmap layouts, multi-device/zoned media, compression/encryption, recovery, mutation, formatting, defragmentation and physical BOOT/kernel integration. Native reference: [pinned Linux source](https://github.com/Infiltrator-Projects/Filesystems/tree/101026021d9088d80b7f0f472d9061f0e2c688a3/native/filesystems/f2fs). New code GPL-3.0-or-later; inherited sources retain their notices.
