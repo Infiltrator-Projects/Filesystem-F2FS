@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #define _POSIX_C_SOURCE 200809L
 #include <infiltratr/filesystem_module_v2.h>
+#include "../Libraries/tests/filesystem_reader_lifetime.h"
 #include <assert.h>
 #include <dlfcn.h>
 #include <fcntl.h>
@@ -66,6 +67,7 @@ int main(int argc,char **argv){
    h.capabilities|=IFS_FS_HOST_EXCLUSIVE;int rc=core->mount(&h,&v,&info);
    if(rc)fprintf(stderr,"F2FS offline mount: %d\n",rc);
    assert(rc==0&&v&&info.block_bytes==4096&&info.free_bytes>0);
+   check_reader_lifetime(core, &h);
    char name[256];IfsFsEntryV2 e={.structure_bytes=sizeof(e),.name=name,.name_capacity=sizeof(name)};
    assert(core->stat(v,"/",&e)==0&&e.type==IFS_FS_ENTRY_DIRECTORY);
    if(argc==3)assert(core->directory_entry(v,"/",0,&e)==IFS_FS_END);
