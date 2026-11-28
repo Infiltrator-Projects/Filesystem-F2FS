@@ -48,18 +48,18 @@ static void expect(const IfsFsCoreOpsV2 *core,IfsFsHostRuntimeV2*h,struct contex
  assert(rc==want&&(!rc?v!=0:v==0)&&!c->allocs);
 }
 int main(int argc,char **argv){
- assert(argc==2||argc==3);void *lib=dlopen(argv[1],RTLD_NOW|RTLD_LOCAL);assert(lib);
+ assert(argc==2||argc==3||argc==4);void *lib=dlopen(argv[1],RTLD_NOW|RTLD_LOCAL);assert(lib);
  IfsFsModuleApiEntryV2 get=(IfsFsModuleApiEntryV2)dlsym(lib,IFS_FS_COMMON_EXPORT_V2);assert(get);
  const IfsFsModuleApiV2*a=get();assert(ifs_fs_api_v2_valid(a,"f2fs"));
  const IfsFsCoreOpsV2*core=(const void*)ifs_fs_group_v2(a,IFS_FS_GROUP_CORE);
  assert(core&&core->mount&&core->read&&!core->write&&!ifs_fs_group_v2(a,IFS_FS_GROUP_DEFRAG));
  struct context c={.fd=-1,.bytes=SIZE};
- if(argc==3){struct stat st;c.fd=open(argv[2],O_RDONLY);assert(c.fd>=0&&!fstat(c.fd,&st)&&st.st_size>0);c.bytes=(uint64_t)st.st_size;}
+ if(argc>=3){struct stat st;c.fd=open(argv[2],O_RDONLY);assert(c.fd>=0&&!fstat(c.fd,&st)&&st.st_size>0);c.bytes=(uint64_t)st.st_size;}
  else {image=calloc(1,SIZE);assert(image);}
  IfsFsHostRuntimeV2 h={.abi_version=2,.structure_bytes=sizeof(h),.capabilities=IFS_FS_HOST_READ_ONLY,.volume_bytes=c.bytes,.maximum_transfer_bytes=4096,.context=&c,.read_at=rd,.allocate=allocate,.release=release};
  for(c.sector=512;c.sector<=4096;c.sector*=8){
   h.logical_sector_bytes=h.physical_sector_bytes=c.sector;
-  if(argc==3){
+  if(argc>=3){
    expect(core,&h,&c,IFS_FS_OK);
    void*v=NULL;IfsFsVolumeInfoV2 info={.structure_bytes=sizeof(info)};
    assert(core->mount(&h,&v,&info)==IFS_FS_ACCESS&&!v);
@@ -68,7 +68,27 @@ int main(int argc,char **argv){
    assert(rc==0&&v&&info.block_bytes==4096&&info.free_bytes>0);
    char name[256];IfsFsEntryV2 e={.structure_bytes=sizeof(e),.name=name,.name_capacity=sizeof(name)};
    assert(core->stat(v,"/",&e)==0&&e.type==IFS_FS_ENTRY_DIRECTORY);
-   assert(core->directory_entry(v,"/",0,&e)==IFS_FS_END);
+   if(argc==3)assert(core->directory_entry(v,"/",0,&e)==IFS_FS_END);
+   else{
+    uint8_t expected[33001],actual[33001];int fd=open(argv[3],O_RDONLY);
+    assert(fd>=0&&read(fd,expected,sizeof(expected))==(ssize_t)sizeof(expected)&&!close(fd));
+    assert(core->stat(v,"/proof.bin",&e)==0&&e.size_bytes==sizeof(expected)&&e.type==IFS_FS_ENTRY_FILE);
+    assert(core->read(v,"/proof.bin",0,actual,sizeof(actual))==0&&!memcmp(actual,expected,sizeof(actual)));
+    assert(core->read(v,"/proof.bin",4093,actual,101)==0&&!memcmp(actual,expected+4093,101));
+    assert(core->stat(v,"/sub/note.txt",&e)==0&&e.size_bytes==5);
+    assert(core->read(v,"/sub/note.txt",0,actual,5)==0&&!memcmp(actual,"hello",5));
+    unsigned seen=0;
+    for(unsigned k=0;;k++){
+     assert(k<3u);int r=core->directory_entry(v,"/",k,&e);
+     if(r==IFS_FS_END)break;
+     assert(r==0);
+     if(!strcmp(name,"proof.bin"))seen|=1;
+     else if(!strcmp(name,"sub"))seen|=2;
+     else assert(0);
+    }
+    assert(seen==3);
+    assert(core->read(v,"/proof.bin",sizeof(expected),actual,1)==IFS_FS_INVALID);
+   }
    assert(core->stat(v,"/absent",&e)==IFS_FS_NOT_FOUND);
    assert(core->unmount(v)==0&&!c.allocs);h.capabilities&=~IFS_FS_HOST_EXCLUSIVE;
    continue;

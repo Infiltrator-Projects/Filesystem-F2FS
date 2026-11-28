@@ -5,7 +5,7 @@
  * non-encrypted volume with no incompatible inode layout extensions.
  */
 #define B 4096u
-#define MAIN_MAX 1048576u /* at most 512 GiB of main-area blocks */
+#define MAIN_MAX 1048576u /* bound the native segment map to 65 MiB (2 TiB main area) */
 typedef struct {
  const IfsFsHostRuntimeV2*h;
  uint32_t main,segments,sit,nat,sit_blocks,nat_blocks;
@@ -156,7 +156,7 @@ typedef struct {const char*name;unsigned length;uint32_t index,id;char found[256
 static int directory_data(const uint8_t*p,unsigned bytes,unsigned slots,Find*f)
 {
  unsigned head=bytes-slots*19u;
- if(!slots||head<(slots+7u)/8u)return IFS_FS_CORRUPT;
+ if(!slots||slots>bytes/19u||head<(slots+7u)/8u)return IFS_FS_CORRUPT;
  const uint8_t*entries=p+head,*names=entries+slots*11u;
  for(unsigned k=0;k<slots;){
   if(!lsb(p,k)){k++;continue;}

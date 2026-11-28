@@ -32,6 +32,14 @@ jobs:
           build/test_f2fs ./build/F2FS.so build/foreign.img
           build/test_f2fs ./build/freestanding/F2FS.so build/foreign.img
           sha256sum -c build/before
+          mkdir -p build/tree/sub
+          dd if=/dev/urandom of=build/tree/proof.bin bs=33001 count=1 status=none
+          printf hello > build/tree/sub/note.txt
+          sload.f2fs -f build/tree build/foreign.img
+          sha256sum build/foreign.img > build/populated-before
+          build/test_f2fs ./build/F2FS.so build/foreign.img build/tree/proof.bin
+          build/test_f2fs ./build/freestanding/F2FS.so build/foreign.img build/tree/proof.bin
+          sha256sum -c build/populated-before
       - name: Sanitizer qualification
         run: |
           make clean
